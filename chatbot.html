@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>CyVoid Cybersecurity Chatbot</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+<style>
+
+.chat-container{
+max-width:700px;
+margin:auto;
+background:#1b4332;
+padding:25px;
+border-radius:10px;
+}
+
+#chatbox{
+height:300px;
+overflow-y:auto;
+background:#081c15;
+padding:15px;
+border-radius:8px;
+margin-bottom:15px;
+}
+
+.user{
+color:#a7ff00;
+}
+
+.bot{
+color:#e9f5db;
+}
+
+input{
+width:80%;
+padding:10px;
+}
+
+button{
+padding:10px;
+background:#2d6a4f;
+color:white;
+border:none;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<h1>CyVoid Cybersecurity Assistant</h1>
+
+</header>
+
+<nav>
+
+<a href="index.html">Home</a>
+<a href="threats.html">Threats</a>
+<a href="protection.html">Protection</a>
+<a href="research-findings.html">Research</a>
+
+</nav>
+
+<section>
+
+<div class="chat-container">
+
+<h2>Ask CyVoid About Cybersecurity</h2>
+
+<div id="chatbox"></div>
+
+<input id="userInput" placeholder="Ask a cybersecurity question">
+
+<button onclick="sendMessage()">Send</button>
+
+</div>
+
+</section>
+
+<section>
+
+<div class="content-card">
+
+<h2>How to Use the Chatbot</h2>
+
+<p>
+The CyVoid chatbot is designed to help users quickly learn about cybersecurity threats and safe digital practices. Users can type questions related to online safety, digital threats, or cybersecurity awareness in the chat input field. After submitting the question, the chatbot will automatically respond with helpful information based on common cybersecurity knowledge topics. This feature allows users to interactively explore the information presented on the website and learn more about protecting themselves online. The chatbot acts as an educational assistant that supports cybersecurity awareness for students and visitors.
+</p>
+
+<p>
+To get the best results, users should ask clear questions related to cybersecurity topics. For example, users can ask about phishing attacks, password security, malware threats, or methods of protecting personal information online. The chatbot will analyze the keywords in the question and provide a relevant explanation or suggestion. This interactive feature helps make cybersecurity education more engaging and accessible for users who want quick answers about digital safety practices.
+</p>
+
+<h3>Example Questions</h3>
+
+<ul>
+
+<li>What is phishing?</li>
+<li>How can I protect my online accounts?</li>
+<li>What is malware?</li>
+<li>How do hackers steal passwords?</li>
+<li>How can students avoid cyberbullying?</li>
+
+</ul>
+
+</div>
+
+</section>
+
+<script src="js/chatbot.js"></script>
+
+</body>
+</html>
