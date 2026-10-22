@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CyVoid Cybersecurity Hub v3.0</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cyber: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#06b6d4',
+                            600: '#0284c7',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #0f172a; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #334155; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #06b6d4; }
+    </style>
+</head>
+<body class="bg-cyber-950 text-slate-100 min-h-screen flex flex-col justify-between selection:bg-cyan-500 selection:text-black">
+
+    <!-- Top Navigation Header -->
+    <header class="sticky top-0 z-40 bg-cyber-900/90 backdrop-blur-md border-b border-slate-800 px-4 py-3">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-3">
+                <!-- Local Image Asset with `./` Prefix -->
+                <img src="./siteLogo.jpg" alt="CyVoid Logo" class="w-9 h-9 rounded-lg object-cover border border-cyan-500/30" onerror="this.onerror=null; this.src='https://placehold.co/100x100/0f172a/06b6d4?text=CV';">
+                <div>
+                    <h1 class="font-bold text-lg text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-500 tracking-wide">CyVoid</h1>
+                    <p class="text-[10px] text-slate-400 -mt-1 hidden sm:block">Security Threat & Defense Intelligence</p>
+                </div>
+            </div>
+
+            <!-- Desktop Header Right Badges -->
+            <div class="flex items-center gap-3">
+                <span class="hidden md:inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-medium bg-cyan-950/80 text-cyan-400 border border-cyan-500/30">
+                    <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span> Live v3.0 Hub
+                </span>
+                <span class="text-xs text-slate-400 bg-slate-800/80 px-2.5 py-1 rounded-full border border-slate-700">Updated: Oct 22, 2026</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Container (Adaptive: Sidebar Desktop / Tabs Mobile) -->
+    <div class="max-w-7xl mx-auto w-full flex-1 flex flex-col md:flex-row gap-6 p-4 md:p-6">
+
+        <!-- Sidebar Navigation (Desktop) -->
+        <aside class="hidden md:flex flex-col w-64 bg-cyber-900 border border-slate-800 rounded-2xl p-4 gap-2 h-[calc(100vh-120px)] sticky top-20">
+            <div class="px-3 py-2 text-xs font-bold text-slate-400 uppercase tracking-wider">Navigation</div>
+            <button onclick="switchTab('dashboard')" id="nav-dashboard" class="nav-btn active flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all bg-cyan-500/10 text-cyan-400 border border-cyan-500/30">
+                <i class="fa-solid fa-chart-line w-5"></i> Dashboard
+            </button>
+            <button onclick="switchTab('threats')" id="nav-threats" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
+                <i class="fa-solid fa-shield-virus w-5"></i> Threat Intelligence
+            </button>
+            <button onclick="switchTab('apps')" id="nav-apps" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
+                <i class="fa-solid fa-box-archive w-5"></i> Free Security Apps
+            </button>
+            <button onclick="switchTab('cyvoid-ai')" id="nav-cyvoid-ai" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
+                <i class="fa-solid fa-robot w-5 text-cyan-400"></i> CyVoid AI Bot
+            </button>
+            <button onclick="switchTab('tools')" id="nav-tools" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
+                <i class="fa-solid fa-screwdriver-wrench w-5"></i> Security Toolkit
+            </button>
+            <button onclick="switchTab('credits')" id="nav-credits" class="nav-btn flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-medium text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 transition-all">
+                <i class="fa-solid fa-users w-5 text-cyan-400"></i> Project Credits
+            </button>
+
+            <div class="mt-auto pt-4 border-t border-slate-800/80">
+                <div class="p-3 bg-slate-900/90 rounded-xl border border-slate-800 flex items-center gap-3">
+                    <img src="./teamHeader.jpg" alt="Team Header" class="w-10 h-10 rounded-lg object-cover border border-slate-700" onerror="this.onerror=null; this.src='https://placehold.co/100x100/1e293b/ffffff?text=Team';">
+                    <div>
+                        <p class="text-xs font-semibold text-slate-200">CyVoid Security</p>
+                        <p class="text-[10px] text-slate-400">v3.0 Adaptive Engine</p>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Dynamic Content Panel -->
+        <main class="flex-1 bg-cyber-900 border border-slate-800 rounded-2xl p-4 sm:p-6 overflow-hidden flex flex-col min-h-[600px]">
+
+            <!-- TAB 1: DASHBOARD -->
+            <section id="tab-dashboard" class="tab-content flex-1 space-y-6">
+                <!-- Banner Image Component -->
+                <div class="relative rounded-xl overflow-hidden border border-slate-800 bg-slate-800/40 min-h-[160px] flex items-end p-6">
+                    <img src="./teamHeader.jpg" alt="Cyber Security Header" class="absolute inset-0 w-full h-full object-cover opacity-25" onerror="this.onerror=null; this.src='https://placehold.co/1200x400/0f172a/06b6d4?text=CyVoid+v3.0+Cybersecurity+Hub';">
+                    <div class="relative z-10 space-y-2 max-w-2xl">
+                        <span class="px-2.5 py-0.5 rounded text-[11px] font-bold tracking-wide uppercase bg-cyan-500/20 text-cyan-300 border border-cyan-500/40">Hub Overview</span>
+                        <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Adaptive Defense Intelligence</h2>
+                        <p class="text-xs sm:text-sm text-slate-300">Centralized platform providing real-time threat analysis, Gemini-driven AI assistance, and curated free cybersecurity tools.</p>
+                    </div>
+                </div>
+
+                <!-- Stats Grid -->
+                <div class="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                    <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 hover:border-cyan-500/30 transition-all">
+                        <p class="text-xs font-medium text-slate-400">Active Threat Index</p>
+                        <p class="text-2xl font-bold text-cyan-400 mt-1">High (Level 4)</p>
+                        <span class="text-[10px] text-slate-500">Global Monitor Status</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 hover:border-cyan-500/30 transition-all">
+                        <p class="text-xs font-medium text-slate-400">Threat Articles</p>
+                        <p class="text-2xl font-bold text-white mt-1">6 Verified</p>
+                        <span class="text-[10px] text-cyan-400/80">With CISA/OWASP links</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 hover:border-cyan-500/30 transition-all">
+                        <p class="text-xs font-medium text-slate-400">Free App Directory</p>
+                        <p class="text-2xl font-bold text-emerald-400 mt-1">10 Curated</p>
+                        <span class="text-[10px] text-slate-500">PC & Mobile Filterable</span>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/60 border border-slate-800/80 hover:border-cyan-500/30 transition-all">
+                        <p class="text-xs font-medium text-slate-400">AI Guardrail Engine</p>
+                        <p class="text-2xl font-bold text-blue-400 mt-1">Gemini API</p>
+                        <span class="text-[10px] text-slate-500">Cybersecurity Focus</span>
+                    </div>
+                </div>
+
+                <!-- Quick Action Callouts -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 pt-2">
+                    <div class="p-5 rounded-xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 flex flex-col justify-between gap-4">
+                        <div class="space-y-1">
+                            <h3 class="font-bold text-base text-slate-200 flex items-center gap-2">
+                                <i class="fa-solid fa-robot text-cyan-400"></i> Ask CyVoid AI Assistant
+                            </h3>
+                            <p class="text-xs text-slate-400">Get instant answers to cybersecurity questions powered by Gemini AI with built-in topic validation.</p>
+                        </div>
+                        <button onclick="switchTab('cyvoid-ai')" class="self-start px-4 py-2 rounded-lg bg-cyan-500 hover:bg-cyan-400 text-black font-semibold text-xs transition-all flex items-center gap-2">
+                            Launch Assistant <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+
+                    <div class="p-5 rounded-xl bg-gradient-to-br from-slate-900 to-slate-950 border border-slate-800 flex flex-col justify-between gap-4">
+                        <div class="space-y-1">
+                            <h3 class="font-bold text-base text-slate-200 flex items-center gap-2">
+                                <i class="fa-solid fa-shield-halved text-emerald-400"></i> Recommended Free Tools
+                            </h3>
+                            <p class="text-xs text-slate-400">Browse 100% free security software carefully categorized for PC and mobile environments.</p>
+                        </div>
+                        <button onclick="switchTab('apps')" class="self-start px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs border border-slate-700 transition-all flex items-center gap-2">
+                            Explore Applications <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: THREAT ARTICLES -->
+            <section id="tab-threats" class="tab-content hidden flex-1 space-y-6">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-shield-virus text-cyan-400"></i> Cybersecurity Threat Directory
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">Updated definitions, mitigations, and reference articles from official security databases.</p>
+                </div>
+
+                <!-- Threat Cards Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Malware -->
+                    <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-col justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <img src="./malwareShield.png" alt="Malware Shield" class="w-12 h-12 rounded-lg object-cover bg-slate-900 border border-slate-800 shrink-0" onerror="this.onerror=null; this.src='https://placehold.co/100x100/1e293b/06b6d4?text=Malware';">
+                            <div>
+                                <h3 class="font-bold text-slate-200 text-sm">Malicious Software (Malware)</h3>
+                                <p class="text-xs text-slate-400 mt-1">Encompasses viruses, trojans, worms, and spyware designed to infiltrate, damage, or compromise system integrity.</p>
+                            </div>
+                        </div>
+                        <div class="pt-2 border-t border-slate-900 flex justify-between items-center text-xs">
+                            <span class="text-slate-500">Ref: OWASP Top 10</span>
+                            <a href="https://www.cisa.gov/topics/cybersecurity-best-practices/malware" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline flex items-center gap-1">
+                                CISA Malware Guide <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Phishing -->
+                    <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-col justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <img src="./phishingAlert.png" alt="Phishing Alert" class="w-12 h-12 rounded-lg object-cover bg-slate-900 border border-slate-800 shrink-0" onerror="this.onerror=null; this.src='https://placehold.co/100x100/1e293b/06b6d4?text=Phishing';">
+                            <div>
+                                <h3 class="font-bold text-slate-200 text-sm">Phishing & Social Engineering</h3>
+                                <p class="text-xs text-slate-400 mt-1">Deceptive emails, calls, or messaging tricking victims into handing over credentials or confidential data.</p>
+                            </div>
+                        </div>
+                        <div class="pt-2 border-t border-slate-900 flex justify-between items-center text-xs">
+                            <span class="text-slate-500">Ref: NIST Special Pub</span>
+                            <a href="https://www.cisa.gov/phishing-guidance" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline flex items-center gap-1">
+                                CISA Phishing Defense <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Ransomware -->
+                    <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-col justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <img src="./ransomwareLock.png" alt="Ransomware Lock" class="w-12 h-12 rounded-lg object-cover bg-slate-900 border border-slate-800 shrink-0" onerror="this.onerror=null; this.src='https://placehold.co/100x100/1e293b/06b6d4?text=Ransomware';">
+                            <div>
+                                <h3 class="font-bold text-slate-200 text-sm">Ransomware Attacks</h3>
+                                <p class="text-xs text-slate-400 mt-1">Extortion-focused malware encrypting files and demanding ransom payments for decryption keys.</p>
+                            </div>
+                        </div>
+                        <div class="pt-2 border-t border-slate-900 flex justify-between items-center text-xs">
+                            <span class="text-slate-500">Ref: StopRansomware.gov</span>
+                            <a href="https://www.cisa.gov/stopransomware" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline flex items-center gap-1">
+                                StopRansomware Hub <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- SQL Injection -->
+                    <div class="p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex flex-col justify-between gap-3">
+                        <div class="flex items-start gap-3">
+                            <img src="./securityApps.png" alt="Database Security" class="w-12 h-12 rounded-lg object-cover bg-slate-900 border border-slate-800 shrink-0" onerror="this.onerror=null; this.src='https://placehold.co/100x100/1e293b/06b6d4?text=SQLi';">
+                            <div>
+                                <h3 class="font-bold text-slate-200 text-sm">SQL Injection (SQLi)</h3>
+                                <p class="text-xs text-slate-400 mt-1">Web vulnerability allowing malicious SQL code insertion to manipulate backend databases.</p>
+                            </div>
+                        </div>
+                        <div class="pt-2 border-t border-slate-900 flex justify-between items-center text-xs">
+                            <span class="text-slate-500">Ref: OWASP Web Standards</span>
+                            <a href="https://owasp.org/www-community/attacks/SQL_Injection" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:underline flex items-center gap-1">
+                                OWASP SQLi Docs <i class="fa-solid fa-arrow-up-right-from-square text-[10px]"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: RECOMMENDED FREE APPLICATIONS -->
+            <section id="tab-apps" class="tab-content hidden flex-1 space-y-6">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                    <div>
+                        <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                            <i class="fa-solid fa-box-archive text-emerald-400"></i> Recommended Security Apps
+                        </h2>
+                        <p class="text-xs text-slate-400 mt-1">100% Free security applications to protect personal computers and mobile devices.</p>
+                    </div>
+
+                    <!-- Device Filter Tabs -->
+                    <div class="inline-flex p-1 bg-slate-950 rounded-lg border border-slate-800 text-xs">
+                        <button onclick="filterApps('all')" id="app-filter-all" class="px-3 py-1.5 rounded-md font-semibold bg-cyan-500 text-black">All Apps</button>
+                        <button onclick="filterApps('pc')" id="app-filter-pc" class="px-3 py-1.5 rounded-md text-slate-400 hover:text-white">PC / Desktop</button>
+                        <button onclick="filterApps('mobile')" id="app-filter-mobile" class="px-3 py-1.5 rounded-md text-slate-400 hover:text-white">Mobile</button>
+                    </div>
+                </div>
+
+                <!-- Applications Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4" id="apps-container">
+                    <!-- PC: Bitwarden -->
+                    <div class="app-card pc p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex justify-between items-center">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">PC & Mobile</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">100% Free</span>
+                            </div>
+                            <h3 class="font-bold text-slate-200 text-sm">Bitwarden Password Manager</h3>
+                            <p class="text-xs text-slate-400">Open-source, highly secure credential vault and password generator.</p>
+                        </div>
+                        <i class="fa-solid fa-key text-2xl text-slate-600 pl-3"></i>
+                    </div>
+
+                    <!-- PC: Wireshark -->
+                    <div class="app-card pc p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex justify-between items-center">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">PC</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Free Open Source</span>
+                            </div>
+                            <h3 class="font-bold text-slate-200 text-sm">Wireshark Network Analyzer</h3>
+                            <p class="text-xs text-slate-400">World's foremost network protocol analyzer for packet inspection.</p>
+                        </div>
+                        <i class="fa-solid fa-network-wired text-2xl text-slate-600 pl-3"></i>
+                    </div>
+
+                    <!-- PC: VeraCrypt -->
+                    <div class="app-card pc p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex justify-between items-center">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-purple-500/20 text-purple-300 border border-purple-500/30">PC</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Free Open Source</span>
+                            </div>
+                            <h3 class="font-bold text-slate-200 text-sm">VeraCrypt File Encryption</h3>
+                            <p class="text-xs text-slate-400">Disk encryption software based on TrueCrypt for securing local drives.</p>
+                        </div>
+                        <i class="fa-solid fa-lock text-2xl text-slate-600 pl-3"></i>
+                    </div>
+
+                    <!-- Mobile: Aegis Authenticator -->
+                    <div class="app-card mobile p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex justify-between items-center">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">Mobile (Android)</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">100% Free</span>
+                            </div>
+                            <h3 class="font-bold text-slate-200 text-sm">Aegis Authenticator</h3>
+                            <p class="text-xs text-slate-400">Secure, encrypted 2-Factor Authentication (2FA) token manager.</p>
+                        </div>
+                        <i class="fa-solid fa-mobile-screen-button text-2xl text-slate-600 pl-3"></i>
+                    </div>
+
+                    <!-- Mobile: Signal -->
+                    <div class="app-card mobile p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex justify-between items-center">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">PC & Mobile</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">100% Free</span>
+                            </div>
+                            <h3 class="font-bold text-slate-200 text-sm">Signal Private Messenger</h3>
+                            <p class="text-xs text-slate-400">End-to-end encrypted messaging and voice calls protecting metadata.</p>
+                        </div>
+                        <i class="fa-solid fa-comment-nodes text-2xl text-slate-600 pl-3"></i>
+                    </div>
+
+                    <!-- Mobile: ProtonVPN Free -->
+                    <div class="app-card mobile p-4 rounded-xl bg-slate-950/70 border border-slate-800 flex justify-between items-center">
+                        <div class="space-y-1">
+                            <div class="flex items-center gap-2">
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-blue-500/20 text-blue-300 border border-blue-500/30">PC & Mobile</span>
+                                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">Free Tier</span>
+                            </div>
+                            <h3 class="font-bold text-slate-200 text-sm">ProtonVPN Free</h3>
+                            <p class="text-xs text-slate-400">No-logs VPN service providing essential encrypted connection browsing.</p>
+                        </div>
+                        <i class="fa-solid fa-shield-cat text-2xl text-slate-600 pl-3"></i>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: CYVOID AI CHATBOT (Gemini API Integrated) -->
+            <section id="tab-cyvoid-ai" class="tab-content hidden flex-1 flex flex-col h-full space-y-4 min-h-[500px]">
+                <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                    <div class="flex items-center gap-3">
+                        <img src="./cyvoidBot.png" alt="CyVoid Bot Avatar" class="w-10 h-10 rounded-xl object-cover border border-cyan-500/40 bg-slate-900" onerror="this.onerror=null; this.src='https://placehold.co/100x100/0f172a/06b6d4?text=CyVoid';">
+                        <div>
+                            <h2 class="font-bold text-slate-100 text-base flex items-center gap-2">
+                                CyVoid Assistant <span class="text-[10px] font-semibold px-2 py-0.5 rounded bg-cyan-950 text-cyan-400 border border-cyan-500/30">Gemini Powered</span>
+                            </h2>
+                            <p class="text-[11px] text-slate-400">Answers strictly cybersecurity questions | Powered by Gemini API</p>
+                        </div>
+                    </div>
+                    <button onclick="clearChat()" class="text-xs text-slate-400 hover:text-slate-200 px-2.5 py-1 rounded bg-slate-800 border border-slate-700">Clear</button>
+                </div>
+
+                <!-- Chat History Window -->
+                <div id="chat-box" class="flex-1 overflow-y-auto custom-scrollbar space-y-4 p-3 bg-slate-950/60 rounded-xl border border-slate-800 max-h-[380px] min-h-[280px]">
+                    <!-- Initial Welcome Message -->
+                    <div class="flex items-start gap-3">
+                        <div class="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 flex items-center justify-center font-bold text-xs shrink-0">CV</div>
+                        <div class="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none p-3 max-w-[85%] text-xs text-slate-200 leading-relaxed space-y-2">
+                            <p>Hello! I am <strong>CyVoid AI</strong>, your cybersecurity advisor. Ask me anything regarding threat protection, passwords, firewalls, or malware!</p>
+                            <p class="text-[10px] text-cyan-400/80 italic">Note: I am guarded to process only cybersecurity topics. Powered by Gemini API.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Input Form -->
+                <form id="chat-form" onsubmit="handleChatSubmit(event)" class="flex gap-2 pt-2">
+                    <input type="text" id="chat-input" placeholder="Ask a cybersecurity question..." class="flex-1 bg-slate-950 border border-slate-800 rounded-xl px-4 py-2.5 text-xs text-slate-100 focus:outline-none focus:border-cyan-500 transition-all placeholder:text-slate-500">
+                    <button type="submit" id="chat-send-btn" class="px-5 py-2.5 bg-cyan-500 hover:bg-cyan-400 text-black font-bold text-xs rounded-xl transition-all flex items-center gap-2">
+                        Send <i class="fa-solid fa-paper-plane"></i>
+                    </button>
+                </form>
+            </section>
+
+            <!-- TAB 5: SECURITY TOOLKIT (Quiz + Password Strength Checker) -->
+            <section id="tab-tools" class="tab-content hidden flex-1 space-y-6">
+                <div>
+                    <h2 class="text-xl font-bold text-white flex items-center gap-2">
+                        <i class="fa-solid fa-screwdriver-wrench text-cyan-400"></i> Interactive Security Toolkit
+                    </h2>
+                    <p class="text-xs text-slate-400 mt-1">Tools to test your password strength and evaluate cybersecurity awareness.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Password Strength Checker -->
+                    <div class="p-5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-4">
+                        <h3 class="font-bold text-slate-200 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-key text-yellow-400"></i> Password Strength & Entropy Analyzer
+                        </h3>
+                        <div class="space-y-2">
+                            <input type="password" id="pwd-input" oninput="checkPasswordStrength()" placeholder="Type a sample password..." class="w-full bg-slate-900 border border-slate-800 rounded-lg px-3 py-2 text-xs text-slate-100 focus:outline-none focus:border-cyan-500">
+                            <div class="w-full bg-slate-900 rounded-full h-2 overflow-hidden">
+                                <div id="pwd-bar" class="h-full w-0 bg-red-500 transition-all duration-300"></div>
+                            </div>
+                            <p id="pwd-status" class="text-xs font-semibold text-slate-400">Strength: Enter password</p>
+                        </div>
+                    </div>
+
+                    <!-- Cyber Threat Self Assessment Quiz -->
+                    <div class="p-5 rounded-xl bg-slate-950/70 border border-slate-800 space-y-4">
+                        <h3 class="font-bold text-slate-200 text-sm flex items-center gap-2">
+                            <i class="fa-solid fa-graduation-cap text-cyan-400"></i> Cyber Awareness Quiz
+                        </h3>
+                        <div id="quiz-container" class="space-y-3">
+                            <p id="quiz-question" class="text-xs text-slate-300 font-medium">Q: What is the main purpose of Multi-Factor Authentication (2FA)?</p>
+                            <div class="space-y-2 text-xs" id="quiz-options">
+                                <button onclick="answerQuiz(true)" class="w-full text-left p-2 rounded bg-slate-900 border border-slate-800 hover:border-cyan-500/50 transition-all text-slate-300">A) Adding extra defense layers beyond passwords</button>
+                                <button onclick="answerQuiz(false)" class="w-full text-left p-2 rounded bg-slate-900 border border-slate-800 hover:border-cyan-500/50 transition-all text-slate-300">B) Making internet connection faster</button>
+                            </div>
+                            <p id="quiz-feedback" class="text-xs font-bold hidden"></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 6: PROJECT CREDITS & ACKNOWLEDGEMENTS -->
+            <section id="tab-credits" class="tab-content hidden flex-1 space-y-6 overflow-y-auto custom-scrollbar pr-2">
+                <div class="text-center space-y-2 mb-6">
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-cyan-400 tracking-tight">Project Credits & Acknowledgements</h2>
+                    <div class="w-24 h-[2px] bg-cyan-500/40 mx-auto"></div>
+                    <p class="text-xs sm:text-sm text-slate-300 max-w-2xl mx-auto">
+                        This comprehensive website idea, research data, and structural vision were brought to life through the intense dedication and hard work of the <strong class="text-white">GROUP 3 ICT 12 RESEARCHERS</strong>.
+                    </p>
+                </div>
+
+                <!-- 3x3 Grid of Researchers Matching Screenshot Design -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-6">
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
+                        <h4 class="font-bold text-slate-100 text-sm">Rheyven Abiad</h4>
+                        <p class="text-xs text-slate-400 mt-0.5">Lead Researcher</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
+                        <h4 class="font-bold text-slate-100 text-sm">Riana Abiad</h4>
+                        <p class="text-xs text-slate-400 mt-0.5">Lead Researcher</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
+                        <h4 class="font-bold text-slate-100 text-sm">Jayam M Austria</h4>
+                        <p class="text-xs text-slate-400 mt-0.5">Lead Researcher</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
+                        <h4 class="font-bold text-slate-100 text-sm">James Baroja</h4>
+                        <p class="text-xs text-slate-400 mt-0.5">Lead Researcher</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
+                        <h4 class="font-bold text-slate-100 text-sm">Samantha Eunice Diaz</h4>
+                        <p class="text-xs text-slate-400 mt-0.5">Lead Researcher</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
+                        <h4 class="font-bold text-slate-100 text-sm">Lucky CJ Feliciano</h4>
+                        <p class="text-xs text-slate-400 mt-0.5">Lead Researcher</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
+                        <h4 class="font-bold text-slate-100 text-sm">Kerbert John Laguardia</h4>
+                        <p class="text-xs text-slate-400 mt-0.5">Lead Researcher</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
+                        <h4 class="font-bold text-slate-100 text-sm">John Michael Medrano</h4>
+                        <p class="text-xs text-slate-400 mt-0.5">Lead Researcher</p>
+                    </div>
+                    <div class="p-4 rounded-xl bg-slate-950/80 border border-slate-800 hover:border-cyan-500/40 transition-all">
+                        <h4 class="font-bold text-slate-100 text-sm">John Cedrick Sicalag</h4>
+                        <p class="text-xs text-slate-400 mt-0.5">Lead Researcher</p>
+                    </div>
+                </div>
+
+                <!-- AI Assistant & Developer Card -->
+                <div class="p-5 rounded-xl bg-gradient-to-br from-slate-950 to-cyan-950/30 border border-cyan-500/40 space-y-2">
+                    <h3 class="font-bold text-white text-base text-center">AI Assistant & Developer</h3>
+                    <div class="space-y-1 text-center sm:text-left">
+                        <h4 class="font-bold text-cyan-400 text-sm">Gemini</h4>
+                        <p class="text-xs text-slate-300 leading-relaxed">
+                            Assisting Group 3 by writing the complex code, generating the interactive structure, and transforming their brilliant research ideas into a functional, highly detailed digital reality.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- Mobile Bottom Navigation Bar (Visible on mobile screens) -->
+    <nav class="md:hidden sticky bottom-0 z-40 bg-cyber-900/95 backdrop-blur-md border-t border-slate-800 px-2 py-2">
+        <div class="flex justify-around items-center">
+            <button onclick="switchTab('dashboard')" id="mobile-nav-dashboard" class="mobile-nav-btn active flex flex-col items-center gap-1 text-cyan-400">
+                <i class="fa-solid fa-chart-line text-base"></i>
+                <span class="text-[10px]">Home</span>
+            </button>
+            <button onclick="switchTab('threats')" id="mobile-nav-threats" class="mobile-nav-btn flex flex-col items-center gap-1 text-slate-400">
+                <i class="fa-solid fa-shield-virus text-base"></i>
+                <span class="text-[10px]">Threats</span>
+            </button>
+            <button onclick="switchTab('apps')" id="mobile-nav-apps" class="mobile-nav-btn flex flex-col items-center gap-1 text-slate-400">
+                <i class="fa-solid fa-box-archive text-base"></i>
+                <span class="text-[10px]">Free Apps</span>
+            </button>
+            <button onclick="switchTab('cyvoid-ai')" id="mobile-nav-cyvoid-ai" class="mobile-nav-btn flex flex-col items-center gap-1 text-slate-400">
+                <i class="fa-solid fa-robot text-base"></i>
+                <span class="text-[10px]">CyVoid AI</span>
+            </button>
+            <button onclick="switchTab('tools')" id="mobile-nav-tools" class="mobile-nav-btn flex flex-col items-center gap-1 text-slate-400">
+                <i class="fa-solid fa-screwdriver-wrench text-base"></i>
+                <span class="text-[10px]">Toolkit</span>
+            </button>
+            <button onclick="switchTab('credits')" id="mobile-nav-credits" class="mobile-nav-btn flex flex-col items-center gap-1 text-slate-400">
+                <i class="fa-solid fa-users text-base"></i>
+                <span class="text-[10px]">Credits</span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Footer Component -->
+    <footer class="bg-cyber-900 border-t border-slate-800 py-4 px-4 text-center text-xs text-slate-400">
+        <div class="max-w-7xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-2">
+            <p>CyVoid Cybersecurity Hub | <strong>Website Version 3.0</strong></p>
+            <p class="text-[11px] text-slate-500">Last Updated: <span class="text-cyan-400 font-medium">October 22, 2026</span></p>
+        </div>
+    </footer>
+
+    <!-- Core App Logic -->
+    <script>
+        // Tab Navigation Controller
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            
+            const selectedTab = document.getElementById(`tab-${tabId}`);
+            if (selectedTab) selectedTab.classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('bg-cyan-500/10', 'text-cyan-400', 'border', 'border-cyan-500/30');
+                btn.classList.add('text-slate-400');
+            });
+            const desktopNav = document.getElementById(`nav-${tabId}`);
+            if (desktopNav) {
+                desktopNav.classList.add('bg-cyan-500/10', 'text-cyan-400', 'border', 'border-cyan-500/30');
+                desktopNav.classList.remove('text-slate-400');
+            }
+
+            document.querySelectorAll('.mobile-nav-btn').forEach(btn => {
+                btn.classList.remove('text-cyan-400');
+                btn.classList.add('text-slate-400');
+            });
+            const mobileNav = document.getElementById(`mobile-nav-${tabId}`);
+            if (mobileNav) {
+                mobileNav.classList.add('text-cyan-400');
+                mobileNav.classList.remove('text-slate-400');
+            }
+        }
+
+        // App Filter Logic
+        function filterApps(category) {
+            const cards = document.querySelectorAll('.app-card');
+            cards.forEach(card => {
+                if (category === 'all') {
+                    card.classList.remove('hidden');
+                } else if (category === 'pc') {
+                    card.classList.contains('pc') ? card.classList.remove('hidden') : card.classList.add('hidden');
+                } else if (category === 'mobile') {
+                    card.classList.contains('mobile') ? card.classList.remove('hidden') : card.classList.add('hidden');
+                }
+            });
+
+            ['all', 'pc', 'mobile'].forEach(cat => {
+                const btn = document.getElementById(`app-filter-${cat}`);
+                if (cat === category) {
+                    btn.className = 'px-3 py-1.5 rounded-md font-semibold bg-cyan-500 text-black';
+                } else {
+                    btn.className = 'px-3 py-1.5 rounded-md text-slate-400 hover:text-white';
+                }
+            });
+        }
+
+        // Password Strength Checker Logic
+        function checkPasswordStrength() {
+            const pwd = document.getElementById('pwd-input').value;
+            const bar = document.getElementById('pwd-bar');
+            const status = document.getElementById('pwd-status');
+
+            if (!pwd) {
+                bar.style.width = '0%';
+                status.innerText = 'Strength: Enter password';
+                status.className = 'text-xs font-semibold text-slate-400';
+                return;
+            }
+
+            let score = 0;
+            if (pwd.length >= 8) score += 25;
+            if (/[A-Z]/.test(pwd)) score += 25;
+            if (/[0-9]/.test(pwd)) score += 25;
+            if (/[^A-Za-z0-9]/.test(pwd)) score += 25;
+
+            bar.style.width = `${score}%`;
+
+            if (score <= 25) {
+                bar.className = 'h-full bg-red-500 transition-all duration-300';
+                status.innerText = 'Strength: Very Weak';
+                status.className = 'text-xs font-semibold text-red-400';
+            } else if (score <= 50) {
+                bar.className = 'h-full bg-orange-500 transition-all duration-300';
+                status.innerText = 'Strength: Moderate';
+                status.className = 'text-xs font-semibold text-orange-400';
+            } else if (score <= 75) {
+                bar.className = 'h-full bg-yellow-500 transition-all duration-300';
+                status.innerText = 'Strength: Strong';
+                status.className = 'text-xs font-semibold text-yellow-400';
+            } else {
+                bar.className = 'h-full bg-emerald-500 transition-all duration-300';
+                status.innerText = 'Strength: Excellent Entropy';
+                status.className = 'text-xs font-semibold text-emerald-400';
+            }
+        }
+
+        // Interactive Quiz Logic
+        function answerQuiz(isCorrect) {
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.classList.remove('hidden');
+            if (isCorrect) {
+                feedback.innerText = 'Correct! Multi-Factor Authentication adds additional security layers beyond passwords.';
+                feedback.className = 'text-xs font-bold text-emerald-400 mt-2';
+            } else {
+                feedback.innerText = 'Incorrect. MFA provides multi-layered identity verification.';
+                feedback.className = 'text-xs font-bold text-red-400 mt-2';
+            }
+        }
+
+        // Gemini API Chatbot Handler with Topic Guardrails
+        async function handleChatSubmit(event) {
+            event.preventDefault();
+            const inputEl = document.getElementById('chat-input');
+            const chatBox = document.getElementById('chat-box');
+            const question = inputEl.value.trim();
+
+            if (!question) return;
+
+            appendMessage('user', question);
+            inputEl.value = '';
+
+            const loadingId = 'loading-' + Date.now();
+            appendLoading(loadingId);
+
+            const systemPrompt = `You are CyVoid AI, a dedicated cybersecurity intelligence assistant. 
+RULES:
+1. ONLY answer questions related to cybersecurity, privacy, networks, malware, digital safety, and online threats.
+2. If the user asks an off-topic question, respond EXACTLY with: "The question doesn't seem to be related to the theme of this website. Can you please state a cybersecurity-related question?"
+3. EVERY response MUST end with the credit attribution line: "\n\n*(Powered by Gemini API)*"`;
+
+            const apiKey = "AQ.Ab8RN6KTAWv3sxUIeoot87PFqS9x9EWpzB2rOu5QxpHjBGak9A";
+            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-3-flash-preview:generateContent?key=${apiKey}`;
+
+            try {
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        contents: [{ parts: [{ text: question }] }],
+                        systemInstruction: { parts: [{ text: systemPrompt }] }
+                    })
+                });
+
+                const data = await response.json();
+                removeLoading(loadingId);
+
+                const botReply = data.candidates?.[0]?.content?.parts?.[0]?.text || "Unable to reach CyVoid security server. Please try again later.";
+                appendMessage('bot', botReply);
+
+            } catch (error) {
+                removeLoading(loadingId);
+                appendMessage('bot', "Connection error: Unable to connect to CyVoid AI intelligence service.\n\n*(Powered by Gemini API)*");
+            }
+        }
+
+        function appendMessage(sender, text) {
+            const chatBox = document.getElementById('chat-box');
+            const msgDiv = document.createElement('div');
+            msgDiv.className = 'flex items-start gap-3';
+
+            if (sender === 'user') {
+                msgDiv.innerHTML = `
+                    <div class="w-7 h-7 rounded-lg bg-slate-800 text-slate-300 flex items-center justify-center font-bold text-xs shrink-0 ml-auto order-2">You</div>
+                    <div class="bg-cyan-600/30 border border-cyan-500/30 rounded-2xl rounded-tr-none p-3 max-w-[85%] text-xs text-slate-100 leading-relaxed ml-auto order-1">
+                        ${escapeHtml(text)}
+                    </div>
+                `;
+            } else {
+                msgDiv.innerHTML = `
+                    <div class="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 flex items-center justify-center font-bold text-xs shrink-0">CV</div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none p-3 max-w-[85%] text-xs text-slate-200 leading-relaxed space-y-1">
+                        ${escapeHtml(text).replace(/\n/g, '<br>')}
+                    </div>
+                `;
+            }
+
+            chatBox.appendChild(msgDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function appendLoading(id) {
+            const chatBox = document.getElementById('chat-box');
+            const loadDiv = document.createElement('div');
+            loadDiv.id = id;
+            loadDiv.className = 'flex items-start gap-3';
+            loadDiv.innerHTML = `
+                <div class="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 flex items-center justify-center font-bold text-xs shrink-0">CV</div>
+                <div class="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none p-3 text-xs text-cyan-400 animate-pulse">
+                    CyVoid AI analyzing cybersecurity query...
+                </div>
+            `;
+            chatBox.appendChild(loadDiv);
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        function removeLoading(id) {
+            const el = document.getElementById(id);
+            if (el) el.remove();
+        }
+
+        function clearChat() {
+            const chatBox = document.getElementById('chat-box');
+            chatBox.innerHTML = `
+                <div class="flex items-start gap-3">
+                    <div class="w-7 h-7 rounded-lg bg-cyan-500/20 text-cyan-400 border border-cyan-500/40 flex items-center justify-center font-bold text-xs shrink-0">CV</div>
+                    <div class="bg-slate-900 border border-slate-800 rounded-2xl rounded-tl-none p-3 max-w-[85%] text-xs text-slate-200 leading-relaxed space-y-2">
+                        <p>Chat session reset. Ask any cybersecurity question!</p>
+                        <p class="text-[10px] text-cyan-400/80 italic">Powered by Gemini API</p>
+                    </div>
+                </div>
+            `;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.innerText = text;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>
